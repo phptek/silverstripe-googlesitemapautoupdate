@@ -1,7 +1,7 @@
 {
     "name": "deviateltd/silverstripe-googlesitemapautoupdate",
     "description": "Creates a Google sitemap.xml and auto-updates it whenever a page published.",
-    "type": "silverstripe-module",
+    "type": "silverstripe-vendormodule",
     "keywords": ["sitemap", "google", "auto", "update"],
     "authors": [
         {
@@ -10,13 +10,13 @@
         },
         {
             "name": "Russell Michell",
-            "email": "russell.michell@deviate.net.nz"
+            "email": "russellmichell@catalyst.net.nz"
         }
     ],
     "require": {
         "composer/installers": "*",
-        "silverstripe/cms": ">=3.1",
-        "silverstripe/framework": ">=3.1",
-        "silverstripe/queuedjobs": ">=2.3.1"
+        "silverstripe/cms": "4.0.x-dev",
+        "silverstripe/framework": "4.0.x-dev",
+        "silverstripe/queuedjobs": "~4.0.5"
     }
 }

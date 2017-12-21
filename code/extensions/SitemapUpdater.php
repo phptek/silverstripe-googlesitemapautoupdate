@@ -1,4 +1,14 @@
 <?php
+
+namespace DeviateLtd\GoogleSitemapAutoUpdater\Model;
+
+use SilverStripe\CMS\Model\SiteTreeExtension;
+use Symbiote\QueuedJobs\Services\AbstractQueuedJob;
+use Symbiote\QueuedJobs\DataObjects\QueuedJobDescriptor;
+use Symbiote\QueuedJobs\Services\QueuedJob;
+use Symbiote\QueuedJobs\Services\QueuedJobService;
+use Symbiote\QueuedJobs\Jobs\GenerateGoogleSitemapJob;
+
 /**
  *
  * A simple {@link SiteTreeExtension} that invokes a {@link QueuedJob} to
@@ -19,14 +29,14 @@ class SitemapUpdater extends SiteTreeExtension
      */
     public function onAfterPublish(&$original)
     {
-        if (!class_exists('AbstractQueuedJob')) {
+        if (!class_exists(AbstractQueuedJob::class)) {
             return;
         }
 
         // Get all "running" GenerateGoogleSitemapJob's
         $list = QueuedJobDescriptor::get()->filter(array(
-            'Implementation'=> 'GenerateGoogleSitemapJob',
-            'JobStatus'        => array(QueuedJob::STATUS_INIT, QueuedJob::STATUS_RUN)
+            'Implementation'=> GenerateGoogleSitemapJob::class,
+            'JobStatus' => [QueuedJob::STATUS_INIT, QueuedJob::STATUS_RUN]
         ));
 
         $existingJob = $list ? $list->first() : null;
@@ -36,8 +46,8 @@ class SitemapUpdater extends SiteTreeExtension
             $where = '"StartAfter" > \'' . date('Y-m-d H:i:s') . '\'';
             $list = QueuedJobDescriptor::get()->where($where);
             $list = $list->filter(array(
-                'Implementation'=> 'GenerateGoogleSitemapJob',
-                'JobStatus'        => array(QueuedJob::STATUS_NEW),
+                'Implementation'=> GenerateGoogleSitemapJob::class,
+                'JobStatus'        => [QueuedJob::STATUS_NEW],
             ));
             $list = $list->sort('ID', 'ASC');
 
@@ -46,6 +56,7 @@ class SitemapUpdater extends SiteTreeExtension
                 $existingJob = $list->first();
                 $existingJob->StartAfter = date('Y-m-d H:i:s');
                 $existingJob->write();
+
                 return;
             }
 
@@ -60,7 +71,7 @@ class SitemapUpdater extends SiteTreeExtension
              * Broken
              */
             $list = QueuedJobDescriptor::get()->filter(array(
-                'Implementation' => 'GenerateGoogleSitemapJob',
+                'Implementation' => GenerateGoogleSitemapJob::class,
             ));
 
             if ($list && $list->count()) {
@@ -68,7 +79,7 @@ class SitemapUpdater extends SiteTreeExtension
             }
 
             $job = new GenerateGoogleSitemapJob();
-            singleton('QueuedJobService')->queueJob($job);
+            singleton(QueuedJobService::class)->queueJob($job);
         }
     }
 }

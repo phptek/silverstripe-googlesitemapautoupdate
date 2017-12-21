@@ -1,10 +1,6 @@
 ---
 Name: googlesitemapautoupdate
-After:
-  - 'framework/*'
-  - 'cms/*'
-  - 'queuedjobs/*'
 ---
-SiteTree:
+SilverStripe\CMS\Model\SiteTree:
   extensions:
-   - SitemapUpdater
+   - DeviateLtd\GoogleSitemapAutoUpdater\Model\SitemapUpdater

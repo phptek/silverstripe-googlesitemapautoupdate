@@ -10,3 +10,13 @@ may already experience time-lags when saving content in the CMS.
 
 If you need anything more complicated such as auto-alerting Google of changes to your
 sitemap, you might consider the standard [Google SiteMaps Module](https://github.com/silverstripe-labs/silverstripe-googlesitemaps).
+
+## Installation
+
+### SilverStripe 4
+
+    composer require deviateltd/googlesitemapautoupdate: 2.0.x
+
+### SilverStripe 4
+
+    composer require deviateltd/googlesitemapautoupdate: 1.0.x
