@@ -1,0 +1,7 @@
+---
+Name: googlesitemapautoupdate
+---
+
+SilverStripe\CMS\Model\SiteTree:
+  extensions:
+   - DeviateLtd\Silverstripe\SitemapUpdater\SitemapUpdater
