@@ -1,0 +1,11 @@
+---
+Name: googlesitemapautoupdate
+After:
+  - 'framework/*'
+  - 'cms/*'
+  - 'queuedjobs/*'
+---
+
+SilverStripe\CMS\Model\SiteTree:
+  extensions:
+   - PhpTek\GoogleSiteMapUpdate\SitemapUpdater
